@@ -1,9 +1,9 @@
 float camX = 0;
 float camY = 0;
 float camZ = 0;
-float rayon = 500;
-float theta = 0;
-float phi = 0;
+float rayon = 800;
+float theta = -177.75;
+float phi = -2.69;
 float centerX = 0;
 float centerY = 0;
 float centerZ = 0;
@@ -20,12 +20,12 @@ PShape scene;
 PShape neon;
 
 PVector[] lightPos = {
-  new PVector(taille, -taille*4, -taille*4),
-  new PVector(taille, -taille*4, 0),
-  new PVector(taille, -taille*4, taille*4),
-  new PVector(taille, taille*5, -taille*4),
-  new PVector(taille, taille*5, 0),
-  new PVector(taille, taille*5, taille*4)
+  new PVector(taille*-2, 0, -taille*5),
+  new PVector(taille*-2, 0, -taille),
+  new PVector(taille*-2, 0 - taille*10, -taille*9),      // - taille*10 pour mieux voir
+  new PVector(taille*-10, 0, -taille*5),
+  new PVector(taille*-10, 0, -taille),
+  new PVector(taille*-10, 0, -taille*9)
 };
 
 PVector[] lightColor = {
@@ -56,13 +56,13 @@ void setup() {
     }
   }
   for(int i=0; i<lightPos.length; i++) {
-     neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[i].x-taille/10, (int)lightPos[i].y, (int)lightPos[i].z);
+     neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[0].y-taille/10, (int)lightPos[i].z, (int)lightPos[i].x);      //[0].y pour bien placer le néon avec l'offset lumière
      scene.addChild(neon);
   }
   walls = murs();
   scene.addChild(walls);
   scene.rotateY(radians(270));
-  scene.rotateZ(radians(180));
+  scene.rotateZ(radians(270));
   scene.rotateX(radians(-180));
   println("x rouge y vert z bleu");
 }
@@ -75,9 +75,12 @@ void draw() {
   for(int i=0; i<lightPos.length; i++) {
     lightSpecular(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z, 
-               lightPos[i].x - taille*-1, lightPos[i].y*1, lightPos[i].z*-4);
+               lightPos[i].x - taille*1, lightPos[i].y*1, lightPos[i].z*1);
   }
-  translate(taille, taille*6, taille*6);
+  translate(taille*6, taille*-3, taille*7);
+  scene.rotateY(radians(0));
+  scene.rotateZ(radians(0));
+  scene.rotateX(radians(0));
   shape(scene);
 
   updateCamera();
@@ -85,9 +88,8 @@ void draw() {
     camX, camY, camZ,                     // observateur : position de la camera.
     centerX, centerY, centerZ,            // sujet : position du sujet visé.
     0, 1, 0);                             // orientation : vecteur "haut".
-    
-    Axis axis = new Axis(0.0, 0.0, 0.0, width, height, width, 2);
-    axis.draw(color(255, 0, 0), color(0, 255, 0), color(0, 0, 255));
+  Axis axis = new Axis(0.0, 0.0, 0.0, width, height, width, 2);
+  axis.draw(color(255, 0, 0), color(0, 255, 0), color(0, 0, 255));
 }
 
 void updateCamera() {
@@ -172,12 +174,12 @@ PShape murs() {
   PShape droite = new Rectangle(-taille, 0, -taille*4 - taille, taille/10, taille*15, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
   textureWrap(CLAMP);
   
-  murs.addChild(sol);
+  /*murs.addChild(sol);
   murs.addChild(arriere);
   murs.addChild(devant);
-  murs.addChild(tableau);
+  murs.addChild(tableau);*/
   murs.addChild(plafond);
-  murs.addChild(gauche);
-  murs.addChild(droite);
+  /*murs.addChild(gauche);
+  murs.addChild(droite);*/
   return murs;
 }

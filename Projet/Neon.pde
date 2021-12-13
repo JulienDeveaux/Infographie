@@ -19,13 +19,13 @@ class Neon {
   PShape dessiner(int x, int y , int z) {
     PImage blanc = loadImage("ressources/blanc.png");
     color t = color(200, 200, 200);
-    int reflective = 5;
     int mat = 10000;
-    PShape neon = new Rectangle(x - taille + taille/10, y - taille*7 + taille/2, z - taille*6, taille/2, taille/10, taille, blanc, t, mat).setEmissive(e1, e2, e3).setBas(loadImage("ressources/neon.png")).dessiner();
+    println(x + " " + y + " " + z);
+    PShape neon = new Rectangle(x + taille/10, y - taille*1 + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat).setEmissive(e1, e2, e3).setBas(loadImage("ressources/neon.png")).dessiner();
     
     
     neon.rotateY(radians(-270));
-    neon.rotateZ(radians(-180));
+    neon.rotateZ(radians(90));
     neon.rotateX(radians(180));
     return neon;
   }
