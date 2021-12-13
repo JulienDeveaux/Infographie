@@ -18,10 +18,9 @@ class Neon {
   
   PShape dessiner(int x, int y , int z) {
     PImage blanc = loadImage("ressources/blanc.png");
-    color t = color(200, 200, 200);
+    color t = color(100, 255, 255);
     int mat = 10000;
-    println(x + " " + y + " " + z);
-    PShape neon = new Rectangle(x + taille/10, y - taille*1 + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat).setEmissive(e1, e2, e3).setBas(loadImage("ressources/neon.png")).dessiner();
+    PShape neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(loadImage("ressources/bois.png")).dessiner();     //emissive remove la texture
     
     
     neon.rotateY(radians(-270));
@@ -30,3 +29,11 @@ class Neon {
     return neon;
   }
 }
+
+/*
+Problèmes
+  -texture néon perturbé par la lumière / emissive cache la texture
+  -retirer les edges créé des gaps
+  -la lumière est placé super haut pour voir le plafond
+  -faire une tex noire pour l'écran tactile
+*/

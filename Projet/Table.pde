@@ -9,6 +9,7 @@ class Table {
     PImage blanc = loadImage("ressources/blanc.png");
     PImage grille = loadImage("ressources/grille.png");
     PImage ecranImg = loadImage("ressources/ecran.png");
+    PImage clavierImg = loadImage("ressources/clavier.png");
     color t = color(255, 238, 0);
     color tn = color(0, 0, 0);
     int reflective = 10;
@@ -28,8 +29,8 @@ class Table {
     PShape ecranStand1 = new Rectangle(x + taille, y - taille/4, z + taille - taille/6, taille/5, taille/4, taille/10, blanc, color(20, 20, 20), mat).dessiner();
     PShape ecranStand2 = new Rectangle(x + 2*taille, y - taille/4, z  + taille - taille/6, taille/5, taille/4, taille/10, blanc, color(20, 20, 20), mat).dessiner();
 
-    PShape clavier1 = new Rectangle(x + taille*2/3, y - taille/20, z + taille/10, taille/20, taille - taille/10, taille/2, blanc, color(0, 0, 0), mat).dessiner();
-    PShape clavier2 = new Rectangle(x + taille*5/3 - taille/20, y - taille/20, z + taille/10, taille/20, taille - taille/10, taille/2, blanc, color(0, 0, 0), mat).dessiner();
+    PShape clavier1 = new Rectangle(x + taille*2/3, y - taille/20, z + taille/10, taille/20, taille - taille/10, taille/2, blanc, color(255, 255, 255), mat).setHaut(clavierImg).dessiner();
+    PShape clavier2 = new Rectangle(x + taille*5/3 - taille/20, y - taille/20, z + taille/10, taille/20, taille - taille/10, taille/2, blanc, color(255, 255, 255), mat).setHaut(clavierImg).dessiner();
     
     PShape pc1 = new Rectangle(x + taille/4, y - taille/2, z + taille/2, taille/2, taille/3, taille/2, blanc, color(30, 30, 30), mat).setFront(grille).dessiner();
     PShape pc2 = new Rectangle(x + taille*5/2 + taille/10, y - taille/2, z + taille/2, taille/2, taille/3, taille/2, blanc, color(30, 30, 30), mat).setFront(grille).dessiner();

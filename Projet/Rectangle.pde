@@ -10,6 +10,8 @@ class Rectangle {
   PImage front, back, gauche, droite, haut, bas;
   int e1, e2, e3;
   
+  boolean b;
+  
   Rectangle(int x, int y, int z, int lon, int lar, int h, PImage tex, color t, int s) {
     this.x = x;
     this.y = y;
