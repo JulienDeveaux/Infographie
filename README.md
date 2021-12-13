@@ -1,2 +1,2 @@
-# InfographieReproduction
-Reproduction de la salle de TP A106
+# Infographie
+Ensemble des cours d'infographie du M1 IWOCS
