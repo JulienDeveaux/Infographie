@@ -19,13 +19,13 @@ PShape walls;
 PShape scene;
 PShape neon;
 
-/*PVector[] lightPos = {                                 //CEUX LA
-  new PVector(0, -taille*4, -taille),
-  new PVector(0, -taille*4, -taille*6),
-  new PVector(0, -taille*4, -taille*12),
-  new PVector(0, -taille*10, -taille),
-  new PVector(0, -taille*10, -taille*6),
-  new PVector(0, -taille*10, -taille*12)
+PVector[] lightPos = {
+  new PVector(taille, -taille*4, -taille*4),
+  new PVector(taille, -taille*4, 0),
+  new PVector(taille, -taille*4, taille*4),
+  new PVector(taille, taille*5, -taille*4),
+  new PVector(taille, taille*5, 0),
+  new PVector(taille, taille*5, taille*4)
 };
 
 PVector[] lightColor = {
@@ -35,126 +35,50 @@ PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum),
   new PVector(puissanceLum, puissanceLum, puissanceLum),
   new PVector(puissanceLum, puissanceLum, puissanceLum)
-};*/
+};
 
 void setup() {
-  /*size(800, 800, P3D);                                //CEUX LA
+  size(800, 800, P3D);
   scene = createShape(GROUP);
   chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
   table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
-  walls = murs();
+  int offset = taille;
+  for(int i = 0; i < 4; i++) {
+    for(int j = 0; j < 4; j++) {
+      chaise = new Chaise(taille).dessiner(taille*2*j + taille/2, -taille/20 + taille*4, taille*i*3 - taille*i/2 + offset);
+      scene.addChild(chaise);
+      chaise = new Chaise(taille).dessiner(taille*2*j + taille + taille/2 + taille/10, -taille/20 + taille*4, taille*i*3 - taille*i/2 + offset);
+      scene.addChild(chaise);
+      if(j<3) {
+        table = new Table(taille).dessiner(taille*3*j, -2*taille/3 + taille*4 + taille/20, taille*i*3 - taille*i/2+ taille/2 + offset);
+        scene.addChild(table);
+      }
+    }
+  }
   for(int i=0; i<lightPos.length; i++) {
-     neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[i].z, (int)lightPos[i].y, (int)lightPos[i].x);
+     neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[i].x-taille/10, (int)lightPos[i].y, (int)lightPos[i].z);
      scene.addChild(neon);
   }
-  scene.addChild(walls);
-  println("x rouge y vert z bleu");*/
-  
-  size(800, 800, P3D);
-  chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
-  table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
   walls = murs();
+  scene.addChild(walls);
+  scene.rotateY(radians(270));
+  scene.rotateZ(radians(180));
+  scene.rotateX(radians(-180));
   println("x rouge y vert z bleu");
 }
 
 void draw() {
-  /*background(255);                                                        //CEUX LA
-  shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
-  stroke(0);
-  translate(taille*-7, taille*6, taille*3);
-  translate(taille*2, -taille*5, -taille*-3);
-  rotateY(radians(90));
-  rotateZ(radians(0));
-  for(int i = 0; i < 4; i++) {
-    for(int j = 0; j < 3; j++) {
-      translate(taille*2/3 - taille/5, 0, 0);
-      shape(chaise);
-      translate(taille*5/3 - taille/6 - taille*2/3 + taille/5, 0, 0);
-      shape(chaise);
-      translate(-taille*5/3 + taille/6, 0, 0);
-      shape(table);
-      translate(taille*3.0 + taille/12, 0, 0);
-    }
-    for(int j = 0; j < 4; j++) {
-      translate(-(taille*2.8), 0, 0);
-    }
-    translate(taille*2, 0, taille*2 + taille/10);
-  }
-  translate(-taille/10, -taille*4, -taille*10);
-  rotateY(radians(90));
-  rotateZ(radians(180));
-  rotateX(radians(-90));
-  shape(scene);*/
-  
-  
-  
-  
   background(0);
   shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   stroke(0);
-  
-  PVector[] lightPos = { 
-    new PVector(0, -taille*4, -taille),
-    new PVector(0, -taille*4, -taille*6),
-    new PVector(0, -taille*4, -taille*12),
-    new PVector(0, -taille*10, -taille),
-    new PVector(0, -taille*10, -taille*6),
-    new PVector(0, -taille*10, -taille*12)
-  };
-
-  PVector[] lightColor = {
-    new PVector(puissanceLum, puissanceLum, puissanceLum),
-    new PVector(puissanceLum, puissanceLum, puissanceLum),
-    new PVector(puissanceLum, puissanceLum, puissanceLum),
-    new PVector(puissanceLum, puissanceLum, puissanceLum),
-    new PVector(puissanceLum, puissanceLum, puissanceLum),
-    new PVector(puissanceLum, puissanceLum, puissanceLum)
-  };
-  
-  translate(taille*2, taille*6, taille*6);
-
   ambientLight(10, 10, 10);
   for(int i=0; i<lightPos.length; i++) {
     lightSpecular(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z, 
-               lightPos[i].x-taille, lightPos[i].y, lightPos[i].z);    //-taille pour mettre la lumière sous le néon et voir mieux
+               lightPos[i].x - taille*-1, lightPos[i].y*1, lightPos[i].z*-4);
   }
-  /*for(int i=0; i<lightPos.length; i++) {
-    pushMatrix();
-        noStroke();
-        fill(0, 0, 0);
-        emissive(lightColor[i].x, lightColor[i].y, lightColor[i].z);
-        translate(lightPos[i].x - taille, lightPos[i].y, lightPos[i].z);
-        box(10, 10, 10);
-    popMatrix();
-  }*/
-  
-  for(int i=0; i<lightPos.length; i++) {
-     PShape neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[i].x, (int)lightPos[i].y, (int)lightPos[i].z);
-     shape(neon);
-  }
-  
-  rotateY(radians(90));
-  walls = murs();
-  shape(walls);
-  translate(0, 0, -taille*4);
-  rotateY(radians(90));
-  rotateZ(radians(-90));
-  for(int i = 0; i < 4; i++) {
-    for(int j = 0; j < 3; j++) {
-      translate(taille*2/3 - taille/5, 0, 0);
-      shape(chaise);
-      translate(taille*5/3 - taille/6 - taille*2/3 + taille/5, 0, 0);
-      shape(chaise);
-      translate(-taille*5/3 + taille/6, 0, 0);
-      shape(table);
-      translate(taille*3.0 + taille/12, 0, 0);
-    }
-    for(int j = 0; j < 4; j++) {
-      translate(-(taille*2.8), 0, 0);
-    }
-    translate(taille*2, 0, taille*2 + taille/10);
-  }
+  translate(taille, taille*6, taille*6);
+  shape(scene);
 
   updateCamera();
   camera(
@@ -233,7 +157,6 @@ PShape murs() {
   PShape devant = new Rectangle(taille*14, 0, -taille*5, -taille*12, taille/10, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
     PShape tableau = new Rectangle(taille*14 - taille/10, -taille, -taille*4, -taille*8, taille/10, taille*4, blancTex, color(100, 100, 100), 100).setBas(loadImage("ressources/tableau.png")).dessiner();
   
-  //PShape gauche = new Rectangle(-taille, -taille*12, -taille*6 + taille, taille/10, taille*15, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
   PShape gauche = createShape(GROUP);
     PShape gaucheHaut = new Rectangle(taille, -taille*12, -taille, taille/10, taille*11, taille + taille/10, blancTex, beigeCol, 100).dessiner();
     PShape gaucheBas = new Rectangle(taille, -taille*12, -taille*6 + taille, taille/10, taille*11, taille, blancTex, beigeCol, 100).dessiner();
@@ -250,7 +173,7 @@ PShape murs() {
   textureWrap(CLAMP);
   
   murs.addChild(sol);
-  //murs.addChild(arriere);
+  murs.addChild(arriere);
   murs.addChild(devant);
   murs.addChild(tableau);
   murs.addChild(plafond);

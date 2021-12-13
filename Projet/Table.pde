@@ -47,6 +47,9 @@ class Table {
     table.addChild(ecranStand2);
     table.addChild(clavier2);
     table.addChild(pc2);
+    table.rotateX(radians(90));
+    table.rotateY(radians(180));
+    table.rotateZ(radians(90));
     return table;
   }
 }
