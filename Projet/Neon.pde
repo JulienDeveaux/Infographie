@@ -1,6 +1,7 @@
 class Neon {
   int taille;
   int e1, e2, e3;
+  boolean isGrand = false;
   
   Neon(int taille) {
     this.taille = taille;
@@ -16,12 +17,21 @@ class Neon {
     return this;
   }
   
+  Neon isGrand(boolean b) {
+    isGrand = b;
+    return this;
+  }
+  
   PShape dessiner(int x, int y , int z) {
     PImage blanc = loadImage("ressources/blanc.png");
     color t = color(100, 255, 255);
     int mat = 10000;
-    PShape neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(loadImage("ressources/bois.png")).dessiner();     //emissive remove la texture
-    
+    PShape neon;
+    if(isGrand == true) {
+       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*6, taille - taille/3, taille/10, taille*6, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(loadImage("ressources/bois.png")).dessiner();     //emissive remove la texture
+    } else {
+       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(loadImage("ressources/bois.png")).dessiner();     //emissive remove la texture
+    }
     
     neon.rotateY(radians(-270));
     neon.rotateZ(radians(90));
@@ -35,5 +45,9 @@ Problèmes
   -texture néon perturbé par la lumière / emissive cache la texture
   -retirer les edges créé des gaps
   -la lumière est placé super haut pour voir le plafond
-  -faire une tex noire pour l'écran tactile
+A faire
+  -croisillons
+  -tables du fond
+  -chauffage
+  -paysage ?
 */

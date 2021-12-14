@@ -1,8 +1,14 @@
 class Table {
   int taille;
+  boolean dessineOrdis = true;
   
   Table(int taille) {
     this.taille = taille;
+  }
+  
+  Table dessinerOrdis(boolean b) {
+    dessineOrdis = b;
+    return this;
   }
   
   PShape dessiner(int x, int y, int z){
@@ -40,14 +46,16 @@ class Table {
     table.addChild(pied2);
     table.addChild(pied3);
     table.addChild(pied4);
-    table.addChild(ecran1);
-    table.addChild(ecranStand1);
-    table.addChild(clavier1);
-    table.addChild(pc1);
-    table.addChild(ecran2);
-    table.addChild(ecranStand2);
-    table.addChild(clavier2);
-    table.addChild(pc2);
+    if(dessineOrdis == true) {
+      table.addChild(ecran1);
+      table.addChild(ecranStand1);
+      table.addChild(clavier1);
+      table.addChild(pc1);
+      table.addChild(ecran2);
+      table.addChild(ecranStand2);
+      table.addChild(clavier2);
+      table.addChild(pc2);
+    }
     table.rotateX(radians(90));
     table.rotateY(radians(180));
     table.rotateZ(radians(90));

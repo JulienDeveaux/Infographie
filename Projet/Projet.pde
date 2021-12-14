@@ -20,7 +20,8 @@ PVector[] lightPos = {
   new PVector(taille*-2, 0 - taille*10, -taille*9),      // - taille*10 pour mieux voir
   new PVector(taille*-10, 0, -taille*5),
   new PVector(taille*-10, 0, -taille),
-  new PVector(taille*-10, 0, -taille*9)
+  new PVector(taille*-10, 0, -taille*9),
+  new PVector(-taille*4, 0, -taille*13)
 };
 
 int puissanceLum = 200;
@@ -30,11 +31,11 @@ PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum),
   new PVector(puissanceLum, puissanceLum, puissanceLum),
   new PVector(puissanceLum, puissanceLum, puissanceLum),
+  new PVector(puissanceLum, puissanceLum, puissanceLum),
   new PVector(puissanceLum, puissanceLum, puissanceLum)
 };
 
 void setup() {
-  frameRate(3);
   size(800, 800, P3D);
   scene = createShape(GROUP);
   PShape chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
@@ -54,10 +55,21 @@ void setup() {
   }
   
   PShape neon;
-  for(int i=0; i<lightPos.length; i++) {
+  for(int i=0; i<lightPos.length - 1; i++) {
      neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[0].y-taille/10, (int)lightPos[i].z, (int)lightPos[i].x);      //[0].y pour bien placer le néon avec l'offset lumière
      scene.addChild(neon);
   }
+  
+  PShape tableProf = createShape(GROUP);
+    PShape tProf = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
+    PShape cProf = new Chaise(taille).invert(true).dessiner(taille*4, -taille/20 + taille*4 + taille/20, taille*11 - taille/3);
+  tableProf.addChild(tProf);
+  tableProf.addChild(cProf);
+  
+  PShape neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
+  
+  scene.addChild(neonTableau);
+  scene.addChild(tableProf);
   scene.addChild(ecranTactile());
   scene.addChild(murs());
   scene.rotateY(radians(270));
@@ -139,16 +151,16 @@ void keyPressed() {
 PShape ecranTactile() {
   int reflective = 50;
   int mat = 10000;
-  PImage blanc = loadImage("ressources/blanc.png");
+  PImage noir = loadImage("ressources/noir.png");
   color c = color(255, 255, 255);
   PShape ecranFinal = createShape(GROUP);
   
-  PShape ecran = new Rectangle(-taille/10, -taille*4, -taille - taille/2, taille*2, taille/3, taille*4, blanc, c, mat).setGauche(loadImage("ressources/ecran.png")).dessiner();
+  PShape ecran = new Rectangle(-taille/10, -taille*4, -taille - taille/2, taille*2, taille/3, taille*4, noir, c, mat).setGauche(loadImage("ressources/ecran.png")).dessiner();
   PShape pied = createShape(GROUP);
-    PShape barre = new Rectangle(-taille/20, 0, 0, taille/10, taille/8, taille, blanc, c, reflective).dessiner();
-    PShape bRoulettes1 = new Rectangle(-taille/2, 0, -taille/5, taille/5, taille, taille/5, blanc, c, reflective).dessiner(); 
-    PShape bRoulettes2 = new Rectangle(-taille/2, 0, taille, taille/5, taille, taille/5, blanc, c, reflective).dessiner(); 
-    PShape barreCentrale =  new Rectangle(-taille/10, -taille*2, taille/3, taille*2, taille/4, taille/3, blanc, c, reflective).dessiner(); 
+    PShape barre = new Rectangle(-taille/20, 0, 0, taille/10, taille/8, taille, noir, c, reflective).dessiner();
+    PShape bRoulettes1 = new Rectangle(-taille/2, 0, -taille/5, taille/5, taille, taille/5, noir, c, reflective).dessiner(); 
+    PShape bRoulettes2 = new Rectangle(-taille/2, 0, taille, taille/5, taille, taille/5, noir, c, reflective).dessiner(); 
+    PShape barreCentrale =  new Rectangle(-taille/10, -taille*2, taille/3, taille*2, taille/4, taille/3, noir, c, reflective).dessiner(); 
   pied.addChild(barre);
   pied.addChild(bRoulettes1);
   pied.addChild(bRoulettes2);
@@ -174,8 +186,11 @@ PShape murs() {
   PShape sol = new Rectangle(-taille, 0, -taille*5, -taille*12, taille*15, -taille/10, solTex, color(150, 0, 0), 100).dessiner();
   PShape plafond = new Rectangle(-taille, 0, taille/5, -taille*12, taille*15, -taille/10, plafondTex, color(255, 255, 255), 100).dessiner();
   PShape arriere = new Rectangle(-taille, 0, -taille*5, -taille*12, taille/10, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
-  PShape devant = new Rectangle(taille*14, 0, -taille*5, -taille*12, taille/10, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
+  PShape devant = createShape(GROUP);
+    PShape devantMur = new Rectangle(taille*14, 0, -taille*5, -taille*12, taille/10, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
     PShape tableau = new Rectangle(taille*14 - taille/10, -taille, -taille*4, -taille*8, taille/10, taille*4, blancTex, color(100, 100, 100), 100).setBas(loadImage("ressources/tableau.png")).dessiner();
+  devant.addChild(devantMur);
+  devant.addChild(tableau);
   
   PShape droite = createShape(GROUP);
     PShape droiteDroite = new Rectangle(-taille, 0, -taille*4 - taille, taille/10, taille*12 + taille/2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
@@ -204,8 +219,7 @@ PShape murs() {
   murs.addChild(sol);
   murs.addChild(arriere);
   murs.addChild(devant);
-  murs.addChild(tableau);
-  //murs.addChild(plafond);
+  murs.addChild(plafond);
   //murs.addChild(droite);
   murs.addChild(gauche);
   return murs;
