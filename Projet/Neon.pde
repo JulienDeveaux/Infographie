@@ -25,7 +25,7 @@ class Neon {
   PShape dessiner(int x, int y , int z) {
     PImage blanc = loadImage("ressources/blanc.png");
     PImage neonTex = loadImage("ressources/neon.png");
-    color t = color(100, 255, 255);
+    color t = color(255, 255, 255);
     int mat = 10000;
     PShape neon;
     if(isGrand == true) {
@@ -45,10 +45,9 @@ class Neon {
 Problèmes
   -texture néon perturbé par la lumière / emissive cache la texture      -> le shader :/
   -retirer les edges créé des gaps
-  -la lumière est placé super haut pour voir le plafond
 A faire
   -croisillons
   -tables du fond
-  -chauffage
   -paysage ?
+  -nuages et soleil en géode
 */

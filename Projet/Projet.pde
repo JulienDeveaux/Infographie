@@ -1,9 +1,9 @@
 float camX = 0;
 float camY = 0;
 float camZ = 0;
-float rayon = 800;
-float theta = -177.75;
-float phi = -2.69;
+float rayon = 450;
+float theta = -270;
+float phi = -10;
 float centerX = 0;
 float centerY = 0;
 float centerZ = 0;
@@ -35,18 +35,15 @@ PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum)
 };
 
-PShape chaise, table, neon, tableProf, neonTableau, mur, ecranT;
-
 void setup() {
   size(800, 800, P3D);
-  mur = murs();
-  ecranT = ecranTactile();
-  
+  PShape mur = murs();
+  PShape ecranT = ecranTactile();
   
   shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   scene = createShape(GROUP);
-  chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
-  table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
+  PShape chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
+  PShape table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
   int offset = taille;
   for(int i = 0; i < 4; i++) {
     for(int j = 0; j < 4; j++) {
@@ -61,26 +58,24 @@ void setup() {
     }
   }
   
-  //neon;
+  PShape neon;
   for(int i=0; i<lightPos.length-1; i++) {    //-1 pour le néon du tableau
      neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[i].y-taille/10, (int)lightPos[i].z, (int)lightPos[i].x);
      scene.addChild(neon);
   }
   
-  tableProf = createShape(GROUP);
+  PShape tableProf = createShape(GROUP);
     PShape tProf = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
     PShape cProf = new Chaise(taille).invert(true).dessiner(taille*4, -taille/20 + taille*4 + taille/20, taille*11 - taille/3);
   tableProf.addChild(tProf);
   tableProf.addChild(cProf);
   
-  neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
+  PShape neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
   
   scene.addChild(neonTableau);
   scene.addChild(tableProf);
-  //scene.addChild(ecranTactile());
-  //scene.addChild(murs());
-  scene.addChild(ecranT);
-  scene.addChild(mur);
+  scene.addChild(ecranTactile());
+  scene.addChild(murs());
   scene.rotateY(radians(270));
   scene.rotateZ(radians(270));
   scene.rotateX(radians(-180));
@@ -88,32 +83,15 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(146,184,197);
   stroke(0);
   ambientLight(10, 10, 10);
   for(int i=0; i<lightPos.length; i++) {
     lightSpecular(lightColor[i].x, lightColor[i].y, lightColor[i].z);
     pointLight(lightColor[i].x, lightColor[i].y, lightColor[i].z, 
-               lightPos[i].x - taille*1, lightPos[i].y*1, lightPos[i].z*1);
+               lightPos[i].x - taille, lightPos[i].y, lightPos[i].z);
   }
   translate(taille*6, taille*-3, taille*7);
-  scene.removeChild(scene.getChildIndex(mur));
-  scene.removeChild(scene.getChildIndex(tableProf));
-  scene.removeChild(scene.getChildIndex(ecranT));
-  scene.removeChild(scene.getChildIndex(neonTableau));
-  ecranT = ecranTactile();
-  int offset = taille;
-    tableProf = createShape(GROUP);
-    PShape tProf = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
-    PShape cProf = new Chaise(taille).invert(true).dessiner(taille*4, -taille/20 + taille*4 + taille/20, taille*11 - taille/3);
-  tableProf.addChild(tProf);
-  tableProf.addChild(cProf);
-  neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
-  mur = murs();
-  scene.addChild(neonTableau);
-  scene.addChild(tableProf);
-  scene.addChild(ecranT);
-  scene.addChild(mur);
   shape(scene);
 
   updateCamera();
@@ -134,6 +112,7 @@ void updateCamera() {
 void mouseDragged() {
   phi = map(mouseY, 0, height, 180, -180);
   theta = map(mouseX, 0, width, -180, 180);
+  println(phi + " " + theta + " " + rayon);
 }
 
 void mouseWheel(MouseEvent event) {
@@ -228,15 +207,17 @@ PShape murs() {
   droite.addChild(droiteHaut);
 
   PShape gauche = createShape(GROUP);
-    PShape gaucheHaut = new Rectangle(taille, -taille*12, -taille, taille/10, taille*11, taille + taille/10, blancTex, beigeCol, 100).dessiner();
-    PShape gaucheBas = new Rectangle(taille, -taille*12, -taille*6 + taille, taille/10, taille*11, taille, blancTex, beigeCol, 100).dessiner();
+    PShape gaucheHaut = new Rectangle(taille, -taille*12, -taille/2 + taille/4 + taille/20, taille/10, taille*11, taille/3, blancTex, beigeCol, 100).dessiner();
+    PShape gaucheBas = new Rectangle(taille, -taille*12, -taille*6 + taille, taille/10, taille*11, taille*2 - taille/5 + taille/30, blancTex, beigeCol, 100).dessiner();
     PShape gaucheDroite = new Rectangle(-taille, -taille*12, -taille*6 + taille, taille/10, taille*2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
     PShape gaucheGauche = new Rectangle(taille*12, -taille*12, -taille*6 + taille, taille/10, taille*2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
-    PShape baie = new Rectangle(taille, -taille*12, -taille*4, taille/10, taille*11, taille*3, blancTex, verre, 1000).dessiner();
+    PShape baie = new Rectangle(taille, -taille*12, -taille*3 - taille/5 + taille/30, taille/10, taille*11, taille*3 - taille/20, blancTex, verre, 1000).dessiner();
+    PShape chauffage = new Rectangle(taille*4, -taille*12 + taille/10, -taille*4 - taille/2 + taille/30, taille/5, taille*5, taille, loadImage("ressources/radiateur.png"), color(240, 240, 240), 1000).dessiner();
   gauche.addChild(gaucheHaut);
   gauche.addChild(gaucheBas);
   gauche.addChild(gaucheGauche);
   gauche.addChild(gaucheDroite);
+  gauche.addChild(chauffage);
   gauche.addChild(baie);
   
   textureWrap(CLAMP);
