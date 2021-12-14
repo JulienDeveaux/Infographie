@@ -24,13 +24,14 @@ class Neon {
   
   PShape dessiner(int x, int y , int z) {
     PImage blanc = loadImage("ressources/blanc.png");
+    PImage neonTex = loadImage("ressources/neon.png");
     color t = color(100, 255, 255);
     int mat = 10000;
     PShape neon;
     if(isGrand == true) {
-       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*6, taille - taille/3, taille/10, taille*6, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(loadImage("ressources/bois.png")).dessiner();     //emissive remove la texture
+       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*6, taille - taille/3, taille/10, taille*6, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(neonTex).dessiner();
     } else {
-       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(loadImage("ressources/bois.png")).dessiner();     //emissive remove la texture
+       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(neonTex).dessiner();
     }
     
     neon.rotateY(radians(-270));
@@ -42,7 +43,7 @@ class Neon {
 
 /*
 Problèmes
-  -texture néon perturbé par la lumière / emissive cache la texture
+  -texture néon perturbé par la lumière / emissive cache la texture      -> le shader :/
   -retirer les edges créé des gaps
   -la lumière est placé super haut pour voir le plafond
 A faire

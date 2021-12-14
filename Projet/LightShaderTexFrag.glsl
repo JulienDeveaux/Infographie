@@ -39,7 +39,7 @@ void main() {
     gl_FragColor = vertEmissive;
   } else {
     for(int i=0; i<lightCount; i++) {
-        vec3  lightDir  = normalize(lightPosition[i].xyz - ecPosition/* / 2*/);
+        vec3  lightDir  = normalize(lightPosition[i].xyz - ecPosition);
         float intensity = lambertFactor(lightDir, normal);
         float spec      = blinnPhongFactor(lightDir, ecPosition, normal, vertShininess);
     

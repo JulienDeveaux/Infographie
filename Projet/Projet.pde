@@ -17,14 +17,14 @@ PShape scene;
 PVector[] lightPos = {
   new PVector(taille*-2, 0, -taille*5),
   new PVector(taille*-2, 0, -taille),
-  new PVector(taille*-2, 0 - taille*10, -taille*9),      // - taille*10 pour mieux voir
+  new PVector(taille*-2, 0, - taille*10),
   new PVector(taille*-10, 0, -taille*5),
   new PVector(taille*-10, 0, -taille),
-  new PVector(taille*-10, 0, -taille*9),
+  new PVector(taille*-10, 0, -taille*10),
   new PVector(-taille*4, 0, -taille*13)
 };
 
-int puissanceLum = 200;
+int puissanceLum = 150;
 PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum),
   new PVector(puissanceLum, puissanceLum, puissanceLum),
@@ -35,11 +35,18 @@ PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum)
 };
 
+PShape chaise, table, neon, tableProf, neonTableau, mur, ecranT;
+
 void setup() {
   size(800, 800, P3D);
+  mur = murs();
+  ecranT = ecranTactile();
+  
+  
+  shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   scene = createShape(GROUP);
-  PShape chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
-  PShape table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
+  chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
+  table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
   int offset = taille;
   for(int i = 0; i < 4; i++) {
     for(int j = 0; j < 4; j++) {
@@ -54,24 +61,26 @@ void setup() {
     }
   }
   
-  PShape neon;
-  for(int i=0; i<lightPos.length - 1; i++) {
-     neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[0].y-taille/10, (int)lightPos[i].z, (int)lightPos[i].x);      //[0].y pour bien placer le néon avec l'offset lumière
+  //neon;
+  for(int i=0; i<lightPos.length-1; i++) {    //-1 pour le néon du tableau
+     neon = new Neon(taille).setEmissive((int)lightColor[i].x, (int)lightColor[i].y, (int)lightColor[i].z).dessiner((int)lightPos[i].y-taille/10, (int)lightPos[i].z, (int)lightPos[i].x);
      scene.addChild(neon);
   }
   
-  PShape tableProf = createShape(GROUP);
+  tableProf = createShape(GROUP);
     PShape tProf = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
     PShape cProf = new Chaise(taille).invert(true).dessiner(taille*4, -taille/20 + taille*4 + taille/20, taille*11 - taille/3);
   tableProf.addChild(tProf);
   tableProf.addChild(cProf);
   
-  PShape neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
+  neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
   
   scene.addChild(neonTableau);
   scene.addChild(tableProf);
-  scene.addChild(ecranTactile());
-  scene.addChild(murs());
+  //scene.addChild(ecranTactile());
+  //scene.addChild(murs());
+  scene.addChild(ecranT);
+  scene.addChild(mur);
   scene.rotateY(radians(270));
   scene.rotateZ(radians(270));
   scene.rotateX(radians(-180));
@@ -80,7 +89,6 @@ void setup() {
 
 void draw() {
   background(0);
-  shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   stroke(0);
   ambientLight(10, 10, 10);
   for(int i=0; i<lightPos.length; i++) {
@@ -89,6 +97,23 @@ void draw() {
                lightPos[i].x - taille*1, lightPos[i].y*1, lightPos[i].z*1);
   }
   translate(taille*6, taille*-3, taille*7);
+  scene.removeChild(scene.getChildIndex(mur));
+  scene.removeChild(scene.getChildIndex(tableProf));
+  scene.removeChild(scene.getChildIndex(ecranT));
+  scene.removeChild(scene.getChildIndex(neonTableau));
+  ecranT = ecranTactile();
+  int offset = taille;
+    tableProf = createShape(GROUP);
+    PShape tProf = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
+    PShape cProf = new Chaise(taille).invert(true).dessiner(taille*4, -taille/20 + taille*4 + taille/20, taille*11 - taille/3);
+  tableProf.addChild(tProf);
+  tableProf.addChild(cProf);
+  neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
+  mur = murs();
+  scene.addChild(neonTableau);
+  scene.addChild(tableProf);
+  scene.addChild(ecranT);
+  scene.addChild(mur);
   shape(scene);
 
   updateCamera();
@@ -220,7 +245,7 @@ PShape murs() {
   murs.addChild(arriere);
   murs.addChild(devant);
   murs.addChild(plafond);
-  //murs.addChild(droite);
+  murs.addChild(droite);
   murs.addChild(gauche);
   return murs;
 }

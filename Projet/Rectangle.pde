@@ -92,7 +92,7 @@ class Rectangle {
     cube2.textureMode(NORMAL);
     cube2.shininess(s);
     cube2.emissive(e1, e2, e3);
-    cube2.normal(0, 0, 1);
+    cube2.normal(0, -1, 1);
     cube2.tint(t);
     cube2.vertex(0 + x, 0 + y, h + z, 0, 0);    //back
     cube2.vertex(0 + x, lon + y, h + z, 0, 1);
@@ -106,7 +106,7 @@ class Rectangle {
     cube3.textureMode(NORMAL);
     cube3.shininess(s);
     cube3.emissive(e1, e2, e3);
-    cube3.normal(0, 0, 1);
+    cube3.normal(-1, 0, 0);
     cube3.tint(t);
     cube3.vertex(0 + x, 0 + y, 0 + z, 0, 0);    //bas
     cube3.vertex(0 + x, 0 + y, h + z, 0, 1);
@@ -120,7 +120,7 @@ class Rectangle {
     cube4.textureMode(NORMAL);
     cube4.shininess(s);
     cube4.emissive(e1, e2, e3);
-    cube4.normal(0, 0, 1);
+    cube4.normal(0, -1, 1);
     cube4.tint(t);
     cube4.vertex(lar + x, 0 + y, 0 + z, 0, 0);    //gauche
     cube4.vertex(lar + x, 0 + y, h + z, 0, 1);
@@ -134,7 +134,7 @@ class Rectangle {
     cube5.textureMode(NORMAL);
     cube5.shininess(s);
     cube5.emissive(e1, e2, e3);
-    cube5.normal(0, 0, 1);
+    cube5.normal(1, 0, 0);
     cube5.tint(t);
     cube5.vertex(0 + x, 0 + y, 0 + z, 0, 0);    // haut
     cube5.vertex(0 + x, 0 + y, h + z, 0, 1);
@@ -148,7 +148,7 @@ class Rectangle {
     cube6.textureMode(NORMAL);
     cube6.shininess(s);
     cube6.emissive(e1, e2, e3);
-    cube6.normal(0, 0, 1);
+    cube6.normal(0, -1, 0);
     cube6.tint(t);
     cube6.vertex(0 + x, lon + y, 0 + z, 0, 0);    // droite
     cube6.vertex(0 + x, lon + y, h + z, 0, 1);
