@@ -50,4 +50,5 @@ A faire
   -tables du fond
   -paysage ?
   -nuages et soleil en géode
+  -camera
 */

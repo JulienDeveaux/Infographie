@@ -36,10 +36,7 @@ PVector[] lightColor = {
 };
 
 void setup() {
-  size(800, 800, P3D);
-  PShape mur = murs();
-  PShape ecranT = ecranTactile();
-  
+  size(800, 800, P3D);  
   shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   scene = createShape(GROUP);
   PShape chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
@@ -79,7 +76,7 @@ void setup() {
   scene.rotateY(radians(270));
   scene.rotateZ(radians(270));
   scene.rotateX(radians(-180));
-  println("x rouge y vert z bleu");
+  println("x rouge y vert z bleu\nCommandes : z-s-q-d-c-espace");
 }
 
 void draw() {
@@ -112,7 +109,6 @@ void updateCamera() {
 void mouseDragged() {
   phi = map(mouseY, 0, height, 180, -180);
   theta = map(mouseX, 0, width, -180, 180);
-  println(phi + " " + theta + " " + rayon);
 }
 
 void mouseWheel(MouseEvent event) {
@@ -125,17 +121,23 @@ void mouseWheel(MouseEvent event) {
 
 void keyPressed() {
   int vitesse = 30;
-    if(key == ' ') {
+    if(key == 's') {
       Z = Z + vitesse;
-    } else if(key == 'z') {
+      centerZ += vitesse;
+    } else if(key == 'c') {
       Y = Y + vitesse;
-    } else if(key == 's') {
-      Y = Y - vitesse;;
+      centerY+=vitesse;
+    } else if(key == ' ') {
+      Y = Y - vitesse;
+      centerY-=vitesse;
     } else if(key == 'd') {
+      centerX += vitesse;
       X = X + vitesse;
     } else if(key == 'q') {
+      centerX -= vitesse;
       X = X - vitesse;
-    } else if(key == 'c') {
+    } else if(key == 'z') {
+      centerZ -= vitesse;
       Z = Z - vitesse;
     } else if(keyCode == RIGHT) {
       centerX += vitesse;
