@@ -14,6 +14,16 @@ float Z = 0;
 int taille = 50;
 PShape scene;
 
+PVector[] lightPos = {
+  new PVector(taille*-2, 0, -taille*5),
+  new PVector(taille*-2, 0, -taille),
+  new PVector(taille*-2, 0, - taille*10),
+  new PVector(taille*-10, 0, -taille*5),
+  new PVector(taille*-10, 0, -taille),
+  new PVector(taille*-10, 0, -taille*10),
+  new PVector(-taille*4, 0, -taille*13)
+};
+
 int puissanceLum = 150;
 PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum),
@@ -26,15 +36,6 @@ PVector[] lightColor = {
 };
 
 void setup() {
-  PVector[] lightPos = {
-  new PVector(taille*-2, 0, -taille*5),
-  new PVector(taille*-2, 0, -taille),
-  new PVector(taille*-2, 0, - taille*10),
-  new PVector(taille*-10, 0, -taille*5),
-  new PVector(taille*-10, 0, -taille),
-  new PVector(taille*-10, 0, -taille*10),
-  new PVector(-taille*4, 0, -taille*13)
-};
   size(800, 800, P3D);  
   shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   scene = new PShape();
@@ -67,6 +68,13 @@ void setup() {
   
   PShape neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
   
+  PShape tableFond = createShape(GROUP);
+    PShape tableF1 = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
+    PShape tableF2 = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
+  tableFond.addChild(tableF1);
+  //tableFond.addChild(tableF2);
+
+  scene.addChild(tableFond);
   scene.addChild(neonTableau);
   scene.addChild(tableProf);
   scene.addChild(ecranTactile());
@@ -75,6 +83,7 @@ void setup() {
 }
 
 void draw() {
+  setup();
   PVector[] lightPos = {      // nouveau lightPos pour pouvoir les bouger en même temps que taille change
     new PVector(taille*-2, 0, -taille*5),
     new PVector(taille*-2, 0, -taille),
@@ -232,10 +241,10 @@ PShape murs() {
   
   murs.addChild(sol);
   murs.addChild(arriere);
-  murs.addChild(devant);
-  murs.addChild(plafond);
-  murs.addChild(droite);
-  murs.addChild(gauche);
+  //murs.addChild(devant);
+  //murs.addChild(plafond);
+  //murs.addChild(droite);
+  //murs.addChild(gauche);
   murs.rotateY(radians(270));
   murs.rotateZ(radians(270));
   murs.rotateX(radians(-180));
