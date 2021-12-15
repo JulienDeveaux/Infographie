@@ -50,9 +50,9 @@ class Chaise {
     chaise.addChild(appuiDossier1);
     chaise.addChild(appuiDossier2);
     chaise.addChild(dossier);
-    chaise.rotateX(radians(90));
-    chaise.rotateY(radians(180));
-    chaise.rotateZ(radians(90));
+    chaise.rotateX(radians(-180));//pitch yaw
+    chaise.rotateY(radians(0));//vers la gauche
+    chaise.rotateZ(radians(180));//vers le haut
     return chaise;
   }
 }

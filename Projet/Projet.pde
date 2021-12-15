@@ -14,16 +14,6 @@ float Z = 0;
 int taille = 50;
 PShape scene;
 
-PVector[] lightPos = {
-  new PVector(taille*-2, 0, -taille*5),
-  new PVector(taille*-2, 0, -taille),
-  new PVector(taille*-2, 0, - taille*10),
-  new PVector(taille*-10, 0, -taille*5),
-  new PVector(taille*-10, 0, -taille),
-  new PVector(taille*-10, 0, -taille*10),
-  new PVector(-taille*4, 0, -taille*13)
-};
-
 int puissanceLum = 150;
 PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum),
@@ -35,12 +25,19 @@ PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum)
 };
 
-PShape table, chaise;
-
 void setup() {
-  frameRate(10);
+  PVector[] lightPos = {
+  new PVector(taille*-2, 0, -taille*5),
+  new PVector(taille*-2, 0, -taille),
+  new PVector(taille*-2, 0, - taille*10),
+  new PVector(taille*-10, 0, -taille*5),
+  new PVector(taille*-10, 0, -taille),
+  new PVector(taille*-10, 0, -taille*10),
+  new PVector(-taille*4, 0, -taille*13)
+};
   size(800, 800, P3D);  
   shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
+  scene = new PShape();
   scene = createShape(GROUP);
   PShape chaise = new Chaise(taille).dessiner(0, -taille/10, 0);
   PShape table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
@@ -74,13 +71,20 @@ void setup() {
   scene.addChild(tableProf);
   scene.addChild(ecranTactile());
   scene.addChild(murs());
-  scene.rotateY(radians(270));
-  scene.rotateZ(radians(270));
-  scene.rotateX(radians(-180));
   println("x rouge y vert z bleu\nCommandes : z-s-q-d-c-espace");
 }
 
 void draw() {
+  PVector[] lightPos = {      // nouveau lightPos pour pouvoir les bouger en même temps que taille change
+    new PVector(taille*-2, 0, -taille*5),
+    new PVector(taille*-2, 0, -taille),
+    new PVector(taille*-2, 0, - taille*10),
+    new PVector(taille*-10, 0, -taille*5),
+    new PVector(taille*-10, 0, -taille),
+    new PVector(taille*-10, 0, -taille*10),
+    new PVector(-taille*4, 0, -taille*13)
+  };
+
   background(146,184,197);
   stroke(0);
   ambientLight(10, 10, 10);
@@ -176,8 +180,9 @@ PShape ecranTactile() {
   ecranFinal.addChild(pied);
   ecranFinal.addChild(ecran);
   ecranFinal.translate(-taille*16, taille*5 - taille/5, -taille*2);
-  ecranFinal.rotateY(radians(225));
-  ecranFinal.rotateX(radians(-90));
+  ecranFinal.rotateX(radians(0));
+  ecranFinal.rotateY(radians(315));
+  ecranFinal.rotateZ(radians(0));
   return ecranFinal;
 }
 
@@ -226,10 +231,13 @@ PShape murs() {
   textureWrap(CLAMP);
   
   murs.addChild(sol);
-  /*murs.addChild(arriere);
+  murs.addChild(arriere);
   murs.addChild(devant);
   murs.addChild(plafond);
   murs.addChild(droite);
-  murs.addChild(gauche);*/
+  murs.addChild(gauche);
+  murs.rotateY(radians(270));
+  murs.rotateZ(radians(270));
+  murs.rotateX(radians(-180));
   return murs;
 }

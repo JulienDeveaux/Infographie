@@ -34,9 +34,9 @@ class Neon {
        neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(neonTex).dessiner();
     }
     
-    neon.rotateY(radians(-270));
+    neon.rotateX(radians(-90));
+    neon.rotateY(radians(180));
     neon.rotateZ(radians(90));
-    neon.rotateX(radians(180));
     return neon;
   }
 }
