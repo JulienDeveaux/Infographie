@@ -69,21 +69,20 @@ void setup() {
   PShape neonTableau = new Neon(taille).isGrand(true).setEmissive((int)lightColor[6].x, (int)lightColor[6].y, (int)lightColor[6].z).dessiner((int)lightPos[6].y-taille/10, (int)lightPos[6].z, (int)lightPos[6].x);
   
   PShape tableFond = createShape(GROUP);
-    PShape tableF1 = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
-    PShape tableF2 = new Table(taille).dessinerOrdis(false).dessiner(taille*3 + taille/2, -2*taille/3 + taille*4 + taille/20, taille*9 + taille/2 + offset);
+    PShape tableF1 = new Table(taille).dessinerOrdis(false).dessiner(taille + taille/2, -2*taille/3 + taille*4 + taille/20, -taille*2 + taille/10 + offset);
+    PShape tableF2 = new Table(taille).dessinerOrdis(false).dessiner(taille*5 + taille/2, -2*taille/3 + taille*4 + taille/20, -taille*2 + taille/10 + offset);
   tableFond.addChild(tableF1);
-  //tableFond.addChild(tableF2);
+  tableFond.addChild(tableF2);
 
   scene.addChild(tableFond);
   scene.addChild(neonTableau);
   scene.addChild(tableProf);
   scene.addChild(ecranTactile());
-  scene.addChild(murs());
+  //scene.addChild(murs());
   println("x rouge y vert z bleu\nCommandes : z-s-q-d-c-espace");
 }
 
 void draw() {
-  setup();
   PVector[] lightPos = {      // nouveau lightPos pour pouvoir les bouger en même temps que taille change
     new PVector(taille*-2, 0, -taille*5),
     new PVector(taille*-2, 0, -taille),
@@ -103,6 +102,7 @@ void draw() {
                lightPos[i].x - taille, lightPos[i].y, lightPos[i].z);
   }
   translate(taille*6, taille*-3, taille*7);
+  shape(murs());
   shape(scene);
 
   updateCamera();
@@ -200,6 +200,7 @@ PShape murs() {
   PImage plafondTex = loadImage("ressources/plafond.png");
   PImage blancTex = loadImage("ressources/blanc.png");
   color beigeCol = color(245, 220, 200);
+  color noirCol = color(20, 20, 20);
   color verre = color(200, 200, 200, 50);
   PShape murs = createShape(GROUP);
   
@@ -214,10 +215,10 @@ PShape murs() {
   devant.addChild(tableau);
   
   PShape droite = createShape(GROUP);
-    PShape droiteDroite = new Rectangle(-taille, 0, -taille*4 - taille, taille/10, taille*12 + taille/2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
-    PShape droiteGauche = new Rectangle(-taille*-13 + taille/2, 0, -taille*4 - taille, taille/10, taille/2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
+    PShape droiteDroite = new Rectangle(-taille, 0, -taille*5, taille/10, taille*12 + taille/2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
+    PShape droiteGauche = new Rectangle(-taille*-13 + taille/2, 0, -taille*5, taille/10, taille/2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
     PShape droiteHaut = new Rectangle(-taille*-11 + taille/2, 0, -taille + taille/10, taille/10, taille*2, taille*1, blancTex, beigeCol, 100).dessiner();
-    PShape porte = new Rectangle(taille*12 - taille/2, 0, -taille*4 - taille, taille/10, taille*2, taille*4 + taille/10, loadImage("ressources/bleu.png"), beigeCol, 100).dessiner();
+    PShape porte = new Rectangle(taille*12 - taille/2, 0, -taille*5, taille/10, taille*2, taille*4 + taille/10, loadImage("ressources/bleu.png"), beigeCol, 100).dessiner();
   droite.addChild(porte);
   droite.addChild(droiteDroite);
   droite.addChild(droiteGauche);
@@ -225,26 +226,36 @@ PShape murs() {
 
   PShape gauche = createShape(GROUP);
     PShape gaucheHaut = new Rectangle(taille, -taille*12, -taille/2 + taille/4 + taille/20, taille/10, taille*11, taille/3, blancTex, beigeCol, 100).dessiner();
-    PShape gaucheBas = new Rectangle(taille, -taille*12, -taille*6 + taille, taille/10, taille*11, taille*2 - taille/5 + taille/30, blancTex, beigeCol, 100).dessiner();
-    PShape gaucheDroite = new Rectangle(-taille, -taille*12, -taille*6 + taille, taille/10, taille*2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
-    PShape gaucheGauche = new Rectangle(taille*12, -taille*12, -taille*6 + taille, taille/10, taille*2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
+    PShape gaucheBas = new Rectangle(taille, -taille*12, -taille*5, taille/10, taille*11, taille*2 - taille/5 + taille/30, blancTex, beigeCol, 100).dessiner();
+    PShape gaucheDroite = new Rectangle(-taille, -taille*12, -taille*5, taille/10, taille*2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
+    PShape gaucheGauche = new Rectangle(taille*12, -taille*12, -taille*5, taille/10, taille*2, taille*5 + taille/10, blancTex, beigeCol, 100).dessiner();
     PShape baie = new Rectangle(taille, -taille*12, -taille*3 - taille/5 + taille/30, taille/10, taille*11, taille*3 - taille/20, blancTex, verre, 1000).dessiner();
-    PShape chauffage = new Rectangle(taille*4, -taille*12 + taille/10, -taille*4 - taille/2 + taille/30, taille/5, taille*5, taille, loadImage("ressources/radiateur.png"), color(240, 240, 240), 1000).dessiner();
+    PShape chauffage = new Rectangle(taille*5, -taille*12 + taille/10, -taille*4 - taille/2 + taille/30, taille/5, taille*5, taille, loadImage("ressources/radiateur.png"), color(240, 240, 240), 1000).dessiner();
+    PShape pillier = new Rectangle(taille*4 + taille/2, -taille*12, -taille*5 - taille/40, taille/2, taille, taille*6 + -18*taille/20, blancTex, beigeCol, 100).dessiner(); 
+    PShape croisillonHaut = new Rectangle(taille, -taille*12, -taille + -taille/5, taille/10, taille*11, taille/4, blancTex, noirCol, 1000).dessiner();
+    PShape croisillonGauche = new Rectangle(taille*2 + taille/2, -taille*12, -taille*3 + taille/-6, taille/10, taille/3, taille*2 - taille/20, blancTex, noirCol, 1000).dessiner(); 
+    PShape croisillonDroite = new Rectangle(taille*9 + taille/2, -taille*12, -taille*3 + taille/-6, taille/10, taille/3, taille*2 - taille/20, blancTex, noirCol, 1000).dessiner(); 
+    PShape croisillonGrand = new Rectangle(taille*7 + taille/2, -taille*12, -taille*3 + taille/-6, taille/10, taille/3, taille*3 - taille/20, blancTex, noirCol, 1000).dessiner(); 
   gauche.addChild(gaucheHaut);
   gauche.addChild(gaucheBas);
   gauche.addChild(gaucheGauche);
   gauche.addChild(gaucheDroite);
   gauche.addChild(chauffage);
+  gauche.addChild(pillier);
+  gauche.addChild(croisillonGauche);
+  gauche.addChild(croisillonDroite);
+  gauche.addChild(croisillonGrand);
+  gauche.addChild(croisillonHaut);
   gauche.addChild(baie);
   
   textureWrap(CLAMP);
   
   murs.addChild(sol);
   murs.addChild(arriere);
-  //murs.addChild(devant);
+  murs.addChild(devant);
   //murs.addChild(plafond);
-  //murs.addChild(droite);
-  //murs.addChild(gauche);
+  murs.addChild(droite);
+  murs.addChild(gauche);
   murs.rotateY(radians(270));
   murs.rotateZ(radians(270));
   murs.rotateX(radians(-180));

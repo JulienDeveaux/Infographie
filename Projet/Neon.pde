@@ -29,7 +29,7 @@ class Neon {
     int mat = 10000;
     PShape neon;
     if(isGrand == true) {
-       neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*6, taille - taille/3, taille/10, taille*6, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(neonTex).dessiner();
+       neon = new Rectangle(x - taille/10, y - taille + taille/2, z + taille*6, taille - taille/3, taille/3, taille*6, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(neonTex).dessiner();
     } else {
        neon = new Rectangle(x + taille/10, y - taille + taille/2, z + taille*12, taille, taille/10, taille/2, blanc, t, mat)/*.setEmissive(e1, e2, e3)*/.setBas(neonTex).dessiner();
     }
@@ -43,12 +43,9 @@ class Neon {
 
 /*
 Problèmes
-  -texture néon perturbé par la lumière / emissive cache la texture      -> le shader :/
   -retirer les edges créé des gaps
 A faire
   -croisillons
-  -tables du fond
   -paysage ?
   -nuages et soleil en géode
-  -camera
 */
