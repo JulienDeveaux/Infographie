@@ -35,7 +35,10 @@ PVector[] lightColor = {
   new PVector(puissanceLum, puissanceLum, puissanceLum)
 };
 
+PShape table, chaise;
+
 void setup() {
+  frameRate(10);
   size(800, 800, P3D);  
   shader(loadShader("LightShaderTexFrag.glsl", "LightShaderTexVert.glsl"));
   scene = createShape(GROUP);
@@ -43,15 +46,13 @@ void setup() {
   PShape table = new Table(taille).dessiner(0, -2*taille/3, taille/2);
   int offset = taille;
   for(int i = 0; i < 4; i++) {
-    for(int j = 0; j < 4; j++) {
-      chaise = new Chaise(taille).dessiner(taille*2*j + taille/2, -taille/20 + taille*4, taille*i*3 - taille*i/2 + offset);
+    for(int j = 0; j < 3; j++) {
+      chaise = new Chaise(taille).dessiner(taille*3*j + taille*j/20 + 2*taille/4 + taille, -taille/20 + taille*4/*taille*4*/, taille*i*3 - taille*i/2 + offset);
       scene.addChild(chaise);
-      chaise = new Chaise(taille).dessiner(taille*2*j + taille + taille/2 + taille/10, -taille/20 + taille*4, taille*i*3 - taille*i/2 + offset);
+      chaise = new Chaise(taille).dessiner(taille*3*j + taille*j/20 + 2*taille/5, -taille/20 + taille*4, taille*i*3 - taille*i/2 + offset);
       scene.addChild(chaise);
-      if(j<3) {
-        table = new Table(taille).dessiner(taille*3*j, -2*taille/3 + taille*4 + taille/20, taille*i*3 - taille*i/2+ taille/2 + offset);
-        scene.addChild(table);
-      }
+      table = new Table(taille).dessiner(taille*3*j, -2*taille/3 + taille*4 + taille/20, taille*i*3 - taille*i/2+ taille/2 + offset);
+      scene.addChild(table);
     }
   }
   
@@ -225,10 +226,10 @@ PShape murs() {
   textureWrap(CLAMP);
   
   murs.addChild(sol);
-  murs.addChild(arriere);
+  /*murs.addChild(arriere);
   murs.addChild(devant);
   murs.addChild(plafond);
   murs.addChild(droite);
-  murs.addChild(gauche);
+  murs.addChild(gauche);*/
   return murs;
 }
