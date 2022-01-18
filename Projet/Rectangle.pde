@@ -76,7 +76,7 @@ class Rectangle {
   cube.beginShape(QUADS);
     cube.texture(front);
     cube.textureMode(NORMAL);
-    //cube.noStroke();
+    cube.noStroke();
     cube.shininess(s);
     cube.emissive(e1, e2, e3);
     cube.normal(0, 0, 1);
@@ -90,7 +90,7 @@ class Rectangle {
   PShape cube2 = createShape();
     cube2.beginShape(QUADS);
     cube2.texture(back);
-    //cube2.noStroke();
+    cube2.noStroke();
     cube2.textureMode(NORMAL);
     cube2.shininess(s);
     cube2.emissive(e1, e2, e3);
@@ -104,7 +104,7 @@ class Rectangle {
   
   PShape cube3 = createShape();
     cube3.beginShape(QUADS);
-    //cube3.noStroke();
+    cube3.noStroke();
     cube3.texture(bas);
     cube3.textureMode(NORMAL);
     cube3.shininess(s);
@@ -119,7 +119,7 @@ class Rectangle {
   
   PShape cube4 = createShape();
     cube4.beginShape(QUADS);
-    //cube4.noStroke();
+    cube4.noStroke();
     cube4.texture(gauche);
     cube4.textureMode(NORMAL);
     cube4.shininess(s);
@@ -149,7 +149,7 @@ class Rectangle {
     
   PShape cube6 = createShape();
     cube6.beginShape(QUADS);
-    //cube6.noStroke();
+    cube6.noStroke();
     cube6.texture(droite);
     cube6.textureMode(NORMAL);
     cube6.shininess(s);

@@ -42,10 +42,9 @@ class Neon {
 }
 
 /*
-Problèmes
-  -retirer les edges créé des gaps
-A faire
-  -croisillons
   -paysage ?
   -nuages et soleil en géode
+  -rajouter la porte de devant et de derrière  
+  -poignée de porte
+  *mettre dans le draw l'avancée
 */
