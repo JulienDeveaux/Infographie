@@ -42,10 +42,7 @@ class Neon {
 }
 
 /*
-  -paysage ?
   -nuages et soleil en géode
-  -rajouter la porte de devant et de derrière  
   -poignée de porte
-  -mettre dans le draw l'avancée
-  -cam plus fluide (push pop inputs)
+  -retirer les axes
 */
