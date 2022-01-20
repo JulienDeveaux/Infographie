@@ -11,7 +11,7 @@ float centerZ = 0;
 int taille = 50;
 PShape scene;
 
-char camGoTo = 'i';
+char[] camGoTo = new char[]{'i', 'i'};
 
 PVector[] lightPos = {
   new PVector(taille*-2, 0, -taille*5),
@@ -104,23 +104,42 @@ void draw() {
   shape(murs());
   shape(scene);
 
-  if (camGoTo!='i') {
+  if (camGoTo[0]!='i') {
+    char c = camGoTo[0];
     int vitesse = 30;
-    if (key == 's') {
+    if (c == 's') {
       centerZ += vitesse;
-    } else if (key == 'c') {
+    } else if (c == 'c') {
       centerY += vitesse;
-    } else if (key == ' ') {
+    } else if (c == ' ') {
       centerY -= vitesse;
-    } else if (key == 'd') {
+    } else if (c == 'd') {
       centerX += vitesse;
-    } else if (key == 'q') {
+    } else if (c == 'q') {
       centerX -= vitesse;
-    } else if (key == 'z') {
+    } else if (c == 'z') {
       centerZ -= vitesse;
-    } else if (key == '8') {
+    } else if (c == '8') {
       taille += 50;
-    } else if (key == '2') {
+    } else if (c == '2') {
+      taille -=50;
+    }
+    char cc = camGoTo[1];    
+    if (cc == 's') {
+      centerZ += vitesse;
+    } else if (cc == 'c') {
+      centerY += vitesse;
+    } else if (cc == ' ') {
+      centerY -= vitesse;
+    } else if (cc == 'd') {
+      centerX += vitesse;
+    } else if (cc == 'q') {
+      centerX -= vitesse;
+    } else if (cc == 'z') {
+      centerZ -= vitesse;
+    } else if (cc == '8') {
+      taille += 50;
+    } else if (cc == '2') {
       taille -=50;
     }
   }
@@ -154,11 +173,19 @@ void mouseWheel(MouseEvent event) {
 }
 
 void keyPressed() {
-  camGoTo = key;
+  if(camGoTo[0] == 'i' ) {
+    camGoTo[0] = key;
+  } else {
+    camGoTo[1] = key;
+  }
 }
 
 void keyReleased() {
-  camGoTo = 'i';
+  if(camGoTo[1] != 'i' ) {
+    camGoTo[1] = 'i';
+  } else {
+    camGoTo[0] = 'i';
+  }
 }
 
 PShape ecranTactile() {
