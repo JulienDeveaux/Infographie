@@ -40,9 +40,3 @@ class Neon {
     return neon;
   }
 }
-
-/*
-  -nuages et soleil en géode
-  -poignée de porte
-  -retirer les axes
-*/

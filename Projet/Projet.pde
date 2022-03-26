@@ -151,8 +151,6 @@ void draw() {
     camX, camY, camZ,                     // observateur : position de la camera.
     centerX, centerY, centerZ,            // sujet : position du sujet visé.
     0, 1, 0);                             // orientation : vecteur "haut".
-  Axis axis = new Axis(0.0, 0.0, 0.0, width, height, width, 2);
-  axis.draw(color(255, 0, 0), color(0, 255, 0), color(0, 0, 255));
 }
 
 void updateCamera() {
